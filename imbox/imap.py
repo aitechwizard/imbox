@@ -31,6 +31,9 @@ class ImapTransport:
 
     def connect(self, username, password):
         self.server.login(username, password)
+        if '163' in self.hostname:
+            ext_info = ('name', 'imbox', 'contact', username, 'version', '1.0.0', 'vendor', 'imbox-vendor')
+            self.server.xatom('ID', '("' + '" "'.join(ext_info) + '")')
         self.server.select()
         logger.debug("Logged into server {} and selected mailbox 'INBOX'"
                      .format(self.hostname))
